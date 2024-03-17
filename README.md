@@ -46,10 +46,10 @@ In the `server/models/TaskModel.js` file, implement a database in either MongoDB
 
 In the `server/models/taskController.js` file, add the following functionality to the exported controller. (These will be server middleware/final handler functions, so they should take the appropriate parameters and perform the necessary callback operations.):
 
-- [ ] Function `postTask` should create a new item in the database
-- [ ] Function `getTasks` should retrieve all items from the database and send it back to the client as JSON
-- [ ] Function `deleteTask` should find items in the database based on an ID number and delete that item if it exists
-- [ ] Errors in any of the controllers (such as those related to querying or updating the database) should trigger a **global error handler** rather than proceeding to the next function in the middleware chain. If you have not already created a global error handler, add one to the `server.js` file. When invoked, it should return a relevant error message to the client, along with a status code of `500`.
+- [x] Function `postTask` should create a new item in the database
+- [x] Function `getTasks` should retrieve all items from the database and send it back to the client as JSON
+- [x] Function `deleteTask` should find items in the database based on an ID number and delete that item if it exists
+- [x] Errors in any of the controllers (such as those related to querying or updating the database) should trigger a **global error handler** rather than proceeding to the next function in the middleware chain. If you have not already created a global error handler, add one to the `server.js` file. When invoked, it should return a relevant error message to the client, along with a status code of `500`.
 
 ## Client-side JavaScript/DOM Manipulation
 

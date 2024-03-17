@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const URI = process.env.MONGO_URI;
+const URI =
+  process.env.MONGO_URI ||
+  'mongodb+srv://deveneciaj:obKVE1uYSRpSnIFJ@cluster0.ymsz0u1.mongodb.net/';
 
 mongoose
   .connect(URI, {
@@ -20,4 +22,4 @@ const taskSchema = new Schema({
 
 const Task = mongoose.model('task', taskSchema);
 
-module.exports = Task; // <-- export your model
+module.exports = Task;
