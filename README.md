@@ -38,9 +38,9 @@ Your To-Do application would be useless without a database to hold onto the task
 
 In the `server/models/TaskModel.js` file, implement a database in either MongoDB or PostgresQL (Mongoose/Sequelize optional) as described below:
 
-- [ ] We want to store our data in a collection/table called `Task`. (Remember, this may be created as the plural `Tasks` - that is fine.)
-- [ ] All items in the database must have a property `item` which is a string
-- [ ] Additionally, all items should be stored with the time they were `created_at`. This should default to the current time
+- [x] We want to store our data in a collection/table called `Task`. (Remember, this may be created as the plural `Tasks` - that is fine.)
+- [x] All items in the database must have a property `item` which is a string
+- [x] Additionally, all items should be stored with the time they were `created_at`. This should default to the current time
 
 #### Task controllers
 
