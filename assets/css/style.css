@@ -1,5 +1,5 @@
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .title {
@@ -19,7 +19,7 @@ body {
 #signin {
   margin: auto;
   width: 25%;
-  padding-top:5%;
+  padding-top: 5%;
   text-align: center;
   background-color: #d3d3d3;
   border: 1px solid black;
@@ -33,7 +33,7 @@ input {
   margin-bottom: 10px;
 }
 
-#create{
+#create {
   margin: 0 auto;
   width: 50%;
   text-align: center;
