@@ -27,7 +27,7 @@ app.use(cookieParser());
 // statically serve css + js
 app.use(express.static(path.resolve(__dirname, '../assets')));
 
-// serve homepage
+// serve index at root path
 app.get('/', (req, res) =>
   res.status(200).sendFile(path.resolve(__dirname, '../views/index.html'))
 );
@@ -44,7 +44,7 @@ app.get('/secret', verifyCookie, (req, res) =>
 
 /* DATABASE APIs */
 
-// retrieve tasks
+// get tasks
 app.get('/api/items', getTasks, (req, res) =>
   res.status(200).json(res.locals.tasks)
 );

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         else {
           // if task has been deleted, reset the task list and re-populate data
           taskList.innerHTML = '';
-          getTasks();
+          return getTasks();
         }
       }
 
@@ -56,9 +56,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
       });
 
       userInput.value = ''; // reset input field
-      getTasks(); // update rendered tasks after adding task
-
-      return;
+      return getTasks(); // update rendered tasks after adding task
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -70,9 +68,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     try {
       await fetch(`/api/items/${id}`, { method: 'DELETE' });
 
-      getTasks(); // update rendered tasks after deleting task
-
-      return;
+      return getTasks(); // update rendered tasks after deleting task
     } catch (error) {
       console.error(error);
       throw new Error(error);

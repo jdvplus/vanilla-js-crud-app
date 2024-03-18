@@ -1,18 +1,29 @@
 const mongoose = require('mongoose');
 
-const URI = process.env.MONGO_URI || '[your mongo URI here]';
+// required to access env variables in Express
+const dotenv = require('dotenv');
+dotenv.config();
 
-mongoose
-  .connect(URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: '[your collection name here]',
-  })
-  .then(() => console.log('connected to mongo DB'))
-  .catch((err) => console.error(err));
+const URI = process.env.MONGO_URI || '<your Mongo DB URI here>';
+
+const connectToDB = async () => {
+  try {
+    await mongoose.connect(URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      dbName: 'grad-app-rewrite',
+    });
+    console.log('Connected to Mongo DB.');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+connectToDB(); // initiate database connection
 
 const Schema = mongoose.Schema;
 
+// create task schema
 const taskSchema = new Schema({
   item: String,
   created_at: { type: Date, default: Date.now },
