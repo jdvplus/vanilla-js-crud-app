@@ -8,6 +8,7 @@ const taskController = require('./controllers/taskController');
 const authController = require('./controllers/authController');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // statically serve css + js
 app.use(express.static(path.resolve(__dirname, '../assets')));
@@ -15,6 +16,11 @@ app.use(express.static(path.resolve(__dirname, '../assets')));
 // serve homepage
 app.get('/', (req, res) =>
   res.status(200).sendFile(path.resolve(__dirname, '../views/index.html'))
+);
+
+// redirect to /secret upon successful sign in
+app.post('/signin', authController.verifyUser, (req, res) =>
+  res.status(301).redirect('/secret')
 );
 
 // serve secret page

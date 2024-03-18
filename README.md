@@ -67,7 +67,7 @@ By now, your server should serve the static assets, the login page, and the secr
 functionality:
 
 - [x] If you have not already done so in conjunction with the tasks above, create the routes to tie the client-side JavaScript events to the appropriate database functions
-- [ ] When the sign in form is submitted, it should redirect to the secret page route. This should **not** be done with AJAX. (This route will be authenticated in a later step.)
+- [x] When the sign in form is submitted, it should redirect to the secret page route. This should **not** be done with AJAX. (This route will be authenticated in a later step.)
 
 ## Authentication
 
