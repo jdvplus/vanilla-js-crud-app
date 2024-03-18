@@ -1,16 +1,14 @@
 const mongoose = require('mongoose');
 
-const URI =
-  process.env.MONGO_URI ||
-  'mongodb+srv://deveneciaj:obKVE1uYSRpSnIFJ@cluster0.ymsz0u1.mongodb.net/';
+const URI = process.env.MONGO_URI || '[your mongo URI here]';
 
 mongoose
   .connect(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'grad-app-rewrite',
+    dbName: '[your collection name here]',
   })
-  .then(() => console.log('Connected to Mongo database.'))
+  .then(() => console.log('connected to mongo DB'))
   .catch((err) => console.error(err));
 
 const Schema = mongoose.Schema;

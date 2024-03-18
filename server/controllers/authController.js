@@ -1,5 +1,6 @@
 const authController = {};
 
+// verify that user is valid
 authController.verifyUser = (req, res, next) => {
   const { user, pass } = req.body;
 
@@ -10,11 +11,13 @@ authController.verifyUser = (req, res, next) => {
   return next();
 };
 
+// set cookie on browser upon successful log-in
 authController.setCookie = (req, res, next) => {
   res.cookie('token', 'admin');
   return next();
 };
 
+// check if user already logged in
 authController.verifyCookie = (req, res, next) => {
   const { token } = req.cookies;
 

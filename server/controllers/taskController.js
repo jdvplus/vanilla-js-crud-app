@@ -23,6 +23,8 @@ taskController.postTask = async (req, res, next) => {
   try {
     const { task } = req.body;
 
+    if (!task) return;
+
     await Task.create({ item: task });
 
     return next();

@@ -5,18 +5,21 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 3333;
 
+// destructure middleware from task controller
 const {
   getTasks,
   postTask,
   deleteTask,
 } = require('./controllers/taskController');
 
+// destructure middleware from auth controller
 const {
   verifyUser,
   setCookie,
   verifyCookie,
 } = require('./controllers/authController');
 
+// enable necessary global middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -34,30 +37,34 @@ app.post('/signin', verifyUser, setCookie, (req, res) =>
   res.status(301).redirect('/secret')
 );
 
-// serve secret page
+// serve secret page if user already logged in
 app.get('/secret', verifyCookie, (req, res) =>
   res.status(200).sendFile(path.resolve(__dirname, '../views/secret.html'))
 );
 
-// retrieve tasks from DB
+/* DATABASE APIs */
+
+// retrieve tasks
 app.get('/api/items', getTasks, (req, res) =>
   res.status(200).json(res.locals.tasks)
 );
 
-// post task to DB
+// post task
 app.post('/api/items', postTask, (req, res) =>
-  res.status(200).json('added task!')
+  res.status(200).json('task was added to the database!')
 );
 
-// delete task from DB
+// delete task
 app.delete('/api/items/:id', deleteTask, (req, res) =>
-  res.status(200).json('task deleted!')
+  res.status(200).json('task was deleted from the database!')
 );
 
-// catch-all error handler
+/* ERROR HANDLERS */
+
+// catch-all (404)
 app.use((req, res) => res.sendStatus(404));
 
-/* GEH */
+// global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',

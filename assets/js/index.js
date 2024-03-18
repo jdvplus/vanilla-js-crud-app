@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (e) => {
+  // create variables to hold DOM elements
   const userInput = document.querySelector('input');
   const addTaskButton = document.querySelector('#task-button');
   const getTasksButton = document.querySelector('#retrieve');
@@ -7,17 +8,19 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const taskElements = document.getElementsByClassName('task');
   const deleteButtonsArray = document.getElementsByClassName('remove');
 
+  // retrieve & display tasks on DOM
   const getTasks = async () => {
     try {
       const res = await fetch('/api/items');
       let data = await res.json();
-      console.log('data in getTasks:', data);
 
       // ensure that only new and/or existing tasks are shown
       if (taskElements.length) {
+        // if task has been added, use .slice() to only render new tasks
         if (data.length >= taskElements.length) {
           data = data.slice(taskElements.length);
         } else {
+          // if task has been deleted, reset the task list and re-populate data
           taskList.innerHTML = '';
           getTasks();
         }
@@ -27,11 +30,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
       for (let i = 0; i < data.length; i += 1) {
         const task = document.createElement('li');
         task.setAttribute('class', 'task');
-        task.innerHTML = `${data[i].item} <button class="remove" id="${data[i]._id}">X</button>`;
+        task.innerHTML = `${data[i].item} <button class="remove" id="${data[i]._id}">X</button>`; // attach database _id to specific delete button
         taskList.appendChild(task);
       }
 
-      // map database IDs of tasks to delete buttons
+      // dynamically add event listeners to delete buttons (linked to database IDs)
       for (const button of deleteButtonsArray) {
         button.addEventListener('click', (e) => {
           deleteTask(e.target.id);
@@ -45,18 +48,17 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   };
 
+  // add task to task list on DOM
   const addTask = async () => {
     try {
-      const res = await fetch('/api/items', {
+      await fetch('/api/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: userInput.value }),
       });
-      const data = await res.json();
-      console.log('addTask confirmation:', data);
 
-      userInput.value = '';
-      getTasks();
+      userInput.value = ''; // reset input field
+      getTasks(); // update rendered tasks after adding task
 
       return;
     } catch (error) {
@@ -65,13 +67,12 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   };
 
+  // delete task from task list on DOM
   const deleteTask = async (id) => {
     try {
-      const res = await fetch(`/api/items/${id}`, { method: 'DELETE' });
-      const data = await res.json();
-      console.log('deleteTask confirmation:', data);
+      await fetch(`/api/items/${id}`, { method: 'DELETE' });
 
-      getTasks();
+      getTasks(); // update rendered tasks after deleting task
 
       return;
     } catch (error) {
@@ -80,6 +81,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   };
 
+  // add event listeners to buttons
   getTasksButton.addEventListener('click', getTasks);
   addTaskButton.addEventListener('click', addTask);
 });
