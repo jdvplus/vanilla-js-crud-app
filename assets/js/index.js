@@ -6,40 +6,38 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
   const taskList = document.querySelector('#task-list');
   const taskElements = document.getElementsByClassName('task');
-  const deleteButtonsArray = document.getElementsByClassName('remove');
+
+  // helper fn: create DOM element for task
+  const addTaskToDOM = (data) => {
+    // create list element for task
+    const task = document.createElement('li');
+    task.setAttribute('class', 'task');
+    task.innerText = data.item;
+
+    // create delete button element
+    const button = document.createElement('button');
+    button.setAttribute('class', 'remove');
+    button.setAttribute('id', data._id); // attach database _id to delete button
+    button.innerText = 'X';
+    button.addEventListener('click', (e) => deleteTask(data._id));
+
+    task.appendChild(button); // append button to list element
+    taskList.appendChild(task); // append task to task list
+  };
 
   // retrieve & display tasks on DOM
   const getTasks = async () => {
     try {
       const res = await fetch('/api/items');
-      let data = await res.json();
+      const data = await res.json();
 
-      // ensure that only new and/or existing tasks are shown
-      if (taskElements.length) {
-        // if task has been added, use .slice() to only render new tasks
-        if (data.length >= taskElements.length)
-          data = data.slice(taskElements.length);
-        else {
-          // if task has been deleted, reset the task list and re-populate data
-          taskList.innerHTML = '';
-          return getTasks();
-        }
+      // ensure that DOM doesn't re-render existing tasks
+      if (taskElements.length === data.length) return;
+
+      // iterate through existing tasks and render to DOM
+      for (const task of data) {
+        addTaskToDOM(task);
       }
-
-      // display tasks as list of <li> elements
-      for (let i = 0; i < data.length; i += 1) {
-        const task = document.createElement('li');
-        task.setAttribute('class', 'task');
-        task.innerHTML = `${data[i].item} <button class="remove" id="${data[i]._id}">X</button>`; // attach database _id to specific delete button
-        taskList.appendChild(task);
-      }
-
-      // dynamically add event listeners to delete buttons (linked to database IDs)
-      for (const button of deleteButtonsArray) {
-        button.addEventListener('click', (e) => deleteTask(e.target.id));
-      }
-
-      return;
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -49,14 +47,15 @@ document.addEventListener('DOMContentLoaded', (e) => {
   // add task to task list on DOM
   const addTask = async () => {
     try {
-      await fetch('/api/items', {
+      const res = await fetch('/api/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: userInput.value }),
       });
+      const data = await res.json();
 
+      addTaskToDOM(data); // add task to task list
       userInput.value = ''; // reset input field
-      return getTasks(); // update rendered tasks after adding task
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -68,7 +67,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
     try {
       await fetch(`/api/items/${id}`, { method: 'DELETE' });
 
-      return getTasks(); // update rendered tasks after deleting task
+      // remove deleted task from DOM
+      const button = document.getElementById(id);
+      const deletedTask = button.parentNode;
+      deletedTask.remove();
     } catch (error) {
       console.error(error);
       throw new Error(error);

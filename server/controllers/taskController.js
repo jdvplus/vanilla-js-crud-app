@@ -22,7 +22,9 @@ taskController.postTask = async (req, res, next) => {
   try {
     const { task } = req.body; // destructure task from request body
     if (!task) return; // do nothing if no task provided
-    await Task.create({ item: task }); // create task document in database
+
+    const addedTask = await Task.create({ item: task }); // create task in database
+    res.locals.addedTask = addedTask; // store added task in res.locals
 
     return next();
   } catch (error) {

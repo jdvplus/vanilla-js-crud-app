@@ -51,7 +51,7 @@ app.get('/api/items', getTasks, (req, res) =>
 
 // post task
 app.post('/api/items', postTask, (req, res) =>
-  res.status(200).json('task was added to the database!')
+  res.status(200).json(res.locals.addedTask)
 );
 
 // delete task
