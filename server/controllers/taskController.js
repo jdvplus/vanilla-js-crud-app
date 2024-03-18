@@ -6,8 +6,7 @@ const taskController = {};
 taskController.getTasks = async (req, res, next) => {
   try {
     const tasks = await Task.find({});
-    console.log('tasks', tasks);
-    res.locals.tasks = tasks;
+    res.locals.tasks = tasks; // store tasks in res.locals
 
     return next();
   } catch (error) {
@@ -22,9 +21,7 @@ taskController.getTasks = async (req, res, next) => {
 taskController.postTask = async (req, res, next) => {
   try {
     const { task } = req.body;
-
-    if (!task) return;
-
+    if (!task) return; // cancel if no task provided
     await Task.create({ item: task });
 
     return next();
@@ -40,7 +37,6 @@ taskController.postTask = async (req, res, next) => {
 taskController.deleteTask = async (req, res, next) => {
   try {
     const { id } = req.params;
-
     await Task.findByIdAndDelete(id);
 
     return next();
