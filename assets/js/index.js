@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
       // ensure that only new and/or existing tasks are shown
       if (taskElements.length) {
         // if task has been added, use .slice() to only render new tasks
-        if (data.length >= taskElements.length) {
+        if (data.length >= taskElements.length)
           data = data.slice(taskElements.length);
-        } else {
+        else {
           // if task has been deleted, reset the task list and re-populate data
           taskList.innerHTML = '';
           getTasks();
@@ -36,9 +36,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
       // dynamically add event listeners to delete buttons (linked to database IDs)
       for (const button of deleteButtonsArray) {
-        button.addEventListener('click', (e) => {
-          deleteTask(e.target.id);
-        });
+        button.addEventListener('click', (e) => deleteTask(e.target.id));
       }
 
       return;
