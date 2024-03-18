@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const userInput = document.querySelector('input');
   const addTaskButton = document.querySelector('#task-button');
   const getTasksButton = document.querySelector('#retrieve');
-
   const taskList = document.querySelector('#task-list');
   const taskElements = document.getElementsByClassName('task');
 

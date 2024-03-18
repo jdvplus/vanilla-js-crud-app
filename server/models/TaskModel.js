@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-// required to access env variables in Express
+// access env variables within Express server
 const dotenv = require('dotenv');
 dotenv.config();
 
-const URI = process.env.MONGO_URI || '<your Mongo DB URI here>';
+const myURI = '<your Mongo DB URI here>';
+const URI = process.env.MONGO_URI || myURI;
 
 const connectToDB = async () => {
   try {
@@ -21,14 +22,12 @@ const connectToDB = async () => {
 
 connectToDB(); // initiate database connection
 
+// create task schema & model
 const Schema = mongoose.Schema;
-
-// create task schema
 const taskSchema = new Schema({
   item: String,
   created_at: { type: Date, default: Date.now },
 });
-
 const Task = mongoose.model('task', taskSchema);
 
 module.exports = Task;

@@ -4,13 +4,13 @@ const authController = {};
 authController.verifyUser = (req, res, next) => {
   const { user, pass } = req.body;
 
-  if (!user || !pass || (user !== 'codesmith' && pass !== 'ilovetesting'))
+  if (!user || !pass || (user !== 'adminUser' && pass !== 'ilovetesting'))
     return res.status(400).json('unsuccessful login attempt');
 
   return next();
 };
 
-// set cookie on browser upon successful log-in
+// set cookie on client browser upon successful log-in
 authController.setCookie = (req, res, next) => {
   res.cookie('token', 'admin');
   return next();

@@ -1,18 +1,18 @@
+// require dependencies
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
+// initialize Express app
 const app = express();
 const PORT = 3333;
 
-// destructure middleware from task controller
+// destructure middleware from task & auth controllers
 const {
   getTasks,
   postTask,
   deleteTask,
 } = require('./controllers/taskController');
-
-// destructure middleware from auth controller
 const {
   verifyUser,
   setCookie,
@@ -62,7 +62,7 @@ app.delete('/api/items/:id', deleteTask, (req, res) =>
 /* ERROR HANDLERS */
 
 // catch-all (404)
-app.use((req, res) => res.sendStatus(404));
+app.use((req, res) => res.status(404).json('Page not found'));
 
 // global error handler
 app.use((err, req, res, next) => {
