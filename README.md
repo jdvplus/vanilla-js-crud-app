@@ -57,16 +57,16 @@ You are serving `index.js` to the client for use on the `secret` page, but there
 
 - [x] When the button is clicked to get tasks, all tasks from the database should be displayed as list items in the `#task-list` element. These list items should display the task item followed by a `button` (inside the list item) with a class of `remove` and display an `X`. As an example, one list item might look like
       `<li>Go shopping <button class="remove">X</button></li`
-- [ ] Multiple clicks of the button to get tasks should not display the list items multiple times
+- [x] Multiple clicks of the button to get tasks should not display the list items multiple times
 - [x] Clicking on the button to add a task should take the text from the input field and create a new task in the database. This task should be seen by clicking the button to get tasks after it has been added. (Optionally, you can display the new task immediately after adding.)
-- [ ] Clicking on any list item's `X` button should remove the item from the list (immediately) and delete the task from the database
+- [x] Clicking on any list item's `X` button should remove the item from the list (immediately) and delete the task from the database
 
 ## Server Routing
 
 By now, your server should serve the static assets, the login page, and the secret page. Add additional routes to achieve the following
 functionality:
 
-- [ ] If you have not already done so in conjunction with the tasks above, create the routes to tie the client-side JavaScript events to the appropriate database functions
+- [x] If you have not already done so in conjunction with the tasks above, create the routes to tie the client-side JavaScript events to the appropriate database functions
 - [ ] When the sign in form is submitted, it should redirect to the secret page route. This should **not** be done with AJAX. (This route will be authenticated in a later step.)
 
 ## Authentication
