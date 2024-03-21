@@ -11,6 +11,7 @@ const PORT = 3333;
 const {
   getTasks,
   postTask,
+  updateTask,
   deleteTask,
 } = require('./controllers/taskController');
 const {
@@ -52,6 +53,11 @@ app.get('/api/items', getTasks, (req, res) =>
 // post task
 app.post('/api/items', postTask, (req, res) =>
   res.status(200).json(res.locals.addedTask)
+);
+
+// update task
+app.patch('/api/items/:id', updateTask, (req, res) =>
+  res.status(200).json(res.locals.updatedTask)
 );
 
 // delete task
