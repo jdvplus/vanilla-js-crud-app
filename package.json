@@ -8,7 +8,7 @@
     "start": "node server/server.js",
     "start-dev": "nodemon server/server.js"
   },
-  "author": "Brandon Mizuno",
+  "author": "Jaime de Venecia",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^16.4.5",
