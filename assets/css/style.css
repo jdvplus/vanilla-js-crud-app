@@ -52,3 +52,10 @@ input {
   border: 1px solid black;
   text-align: center;
 }
+
+#update-task {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 3%;
+}

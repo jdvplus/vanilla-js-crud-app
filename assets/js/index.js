@@ -8,6 +8,17 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const updateTaskContainer = document.querySelector('#update-task');
   const updateTaskContainerElements = document.getElementsByClassName('update');
 
+  // create input field & submit button for updating a task
+
+  const updateInput = document.createElement('input');
+  updateInput.setAttribute('class', 'update');
+  updateInput.setAttribute('placeholder', 'update your task!');
+  updateInput.setAttribute('type', 'text');
+
+  const updateButton = document.createElement('button');
+  updateButton.setAttribute('class', 'update');
+  updateButton.innerText = 'Update Task';
+
   // helper fn: create DOM element for task
   const addTaskToDOM = (data) => {
     // create list element for task
@@ -18,34 +29,29 @@ document.addEventListener('DOMContentLoaded', (e) => {
     // create delete button element
     const deleteButton = document.createElement('button');
     deleteButton.setAttribute('class', 'remove');
-    deleteButton.setAttribute('id', data._id); // attach database _id to delete deleteButton
+    deleteButton.setAttribute('id', data._id); // attach database _id
     deleteButton.innerText = 'X';
     deleteButton.addEventListener('click', (e) => deleteTask(data._id));
 
     // create 'edit task' button element
     const editTaskButton = document.createElement('button');
     editTaskButton.setAttribute('class', 'remove');
-    editTaskButton.setAttribute('id', data._id); // attach database _id to update deleteButton
-    editTaskButton.innerText = 'E';
+    editTaskButton.setAttribute('id', data._id); // attach database _id
+    editTaskButton.innerText = 'O';
 
-    // on click, produce input field with submit button
+    // on click, populate updateTaskContainer with input field & submit button
     editTaskButton.addEventListener('click', (e) => {
       if (updateTaskContainerElements.length === 2) return;
 
-      const updateInput = document.createElement('input');
-      updateInput.setAttribute('class', 'update');
-      updateInput.setAttribute('placeholder', 'update your task!');
-      updateInput.setAttribute('type', 'text');
-
-      const updateButton = document.createElement('button');
-      updateButton.setAttribute('class', 'update');
-      updateButton.setAttribute('id', data._id);
-      updateButton.innerText = 'Update Task';
+      updateButton.addEventListener('click', (e) => {
+        updateTask(data._id, updateInput.value);
+        updateInput.value = '';
+      });
 
       updateTaskContainer.append(updateInput, updateButton);
     });
 
-    task.append(editTaskButton, deleteButton); // append update & delete buttons to list element
+    task.append(deleteButton, editTaskButton); // append update & delete buttons to list element
     taskList.appendChild(task); // append task to task list
   };
 
@@ -56,7 +62,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
       const data = await res.json();
 
       // ensure that DOM doesn't re-render existing tasks
-      if (taskElements.length === data.length) return;
+      taskList.innerHTML = '';
+
+      // if (taskElements.length === data.length) return;
 
       // iterate through existing tasks and render to DOM
       for (const task of data) {
@@ -89,11 +97,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
   // update task in task list on DOM
   const updateTask = async (id, updatedTask) => {
     try {
-      const res = await fetch(`/api/items/${id}`, {
+      await fetch(`/api/items/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: updatedTask }),
       });
+
+      getTasks();
     } catch (error) {
       console.error(error);
       throw new Error(error);
