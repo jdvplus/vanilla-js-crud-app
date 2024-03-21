@@ -37,6 +37,7 @@ taskController.postTask = async (req, res, next) => {
 
 // update task
 taskController.updateTask = async (req, res, next) => {
+  // destructure id from request params & task from request body
   const { id } = req.params;
   const { task } = req.body;
 
@@ -45,9 +46,8 @@ taskController.updateTask = async (req, res, next) => {
       id,
       { item: task },
       { new: true }
-    );
-    console.log('updatedTask', updatedTask);
-    res.locals.updatedTask = updatedTask;
+    ); // update task in database
+    res.locals.updatedTask = updatedTask; // store updated task in res.locals
 
     return next();
   } catch (error) {
