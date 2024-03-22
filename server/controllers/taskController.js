@@ -19,10 +19,10 @@ taskController.getTasks = async (req, res, next) => {
 
 // post task
 taskController.postTask = async (req, res, next) => {
-  try {
-    const { task } = req.body; // destructure task from request body
-    if (!task) return; // do nothing if no task provided
+  const { task } = req.body; // destructure task from request body
+  if (!task) return; // do nothing if no task provided
 
+  try {
     const addedTask = await Task.create({ item: task }); // create task in database
     res.locals.addedTask = addedTask; // store added task in res.locals
 
@@ -37,8 +37,9 @@ taskController.postTask = async (req, res, next) => {
 
 // delete task
 taskController.deleteTask = async (req, res, next) => {
+  const { id } = req.params; // destructure ID from request params
+
   try {
-    const { id } = req.params; // destructure ID from request params
     await Task.findByIdAndDelete(id); // delete task from database
 
     return next();

@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const addTaskButton = document.querySelector('#task-button');
   const getTasksButton = document.querySelector('#retrieve');
   const taskList = document.querySelector('#task-list');
-  const taskElements = document.getElementsByClassName('task');
 
   // helper fn: create DOM element for task
   const addTaskToDOM = (data) => {
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
       const data = await res.json();
 
       // ensure that DOM doesn't re-render existing tasks
-      if (taskElements.length === data.length) return;
+      taskList.innerHTML = '';
 
       // iterate through existing tasks and render to DOM
       for (const task of data) {
