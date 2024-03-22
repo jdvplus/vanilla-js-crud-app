@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
     editTaskButton.addEventListener('click', (e) => {
       console.log('data.id in editTaskButton', data._id);
 
-      if (updateTaskContainerElements.length === 2) return;
+      if (updateTaskContainerElements.length === 2)
+        updateTaskContainer.innerHTML = '';
 
       updateButton.addEventListener('click', (e) => {
         updateTask(data._id, updateInput.value);
-        updateInput.value = '';
       });
 
       updateTaskContainer.append(updateInput, updateButton);
@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         body: JSON.stringify({ task: updatedTask }),
       });
 
+      updateInput.value = '';
       getTasks();
     } catch (error) {
       console.error(error);
