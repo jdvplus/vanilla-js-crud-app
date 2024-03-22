@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const addTaskButton = document.querySelector('#task-button');
   const getTasksButton = document.querySelector('#retrieve');
   const taskList = document.querySelector('#task-list');
-  const taskElements = document.getElementsByClassName('task');
   const updateTaskContainer = document.querySelector('#update-task');
   const updateTaskContainerElements = document.getElementsByClassName('update');
 
@@ -41,6 +40,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     // on click, populate updateTaskContainer with input field & submit button
     editTaskButton.addEventListener('click', (e) => {
+      console.log('data.id in editTaskButton', data._id);
+
       if (updateTaskContainerElements.length === 2) return;
 
       updateButton.addEventListener('click', (e) => {
@@ -63,8 +64,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
       // ensure that DOM doesn't re-render existing tasks
       taskList.innerHTML = '';
-
-      // if (taskElements.length === data.length) return;
 
       // iterate through existing tasks and render to DOM
       for (const task of data) {

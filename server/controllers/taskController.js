@@ -42,12 +42,7 @@ taskController.updateTask = async (req, res, next) => {
   const { task } = req.body;
 
   try {
-    const updatedTask = await Task.findByIdAndUpdate(
-      id,
-      { item: task },
-      { new: true }
-    ); // update task in database
-    res.locals.updatedTask = updatedTask; // store updated task in res.locals
+    await Task.findByIdAndUpdate(id, { item: task }, { new: true }); // update task in database
 
     return next();
   } catch (error) {

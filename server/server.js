@@ -57,7 +57,7 @@ app.post('/api/items', postTask, (req, res) =>
 
 // update task
 app.patch('/api/items/:id', updateTask, (req, res) =>
-  res.status(200).json(res.locals.updatedTask)
+  res.status(200).json('updated task in the database!')
 );
 
 // delete task
