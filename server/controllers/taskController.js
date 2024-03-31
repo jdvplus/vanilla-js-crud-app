@@ -1,12 +1,13 @@
-const Task = require('../models/TaskModel');
+const db = require('../models/TaskModel');
 
 const taskController = {};
 
-// get tasks
 taskController.getTasks = async (req, res, next) => {
+  const queryString = 'SELECT * from task ORDER BY _id ASC';
+
   try {
-    const tasks = await Task.find({}); // retrieve tasks from database
-    res.locals.tasks = tasks; // store tasks in res.locals
+    const data = await db.query(queryString);
+    res.locals.tasks = data.rows;
 
     return next();
   } catch (error) {
@@ -17,14 +18,15 @@ taskController.getTasks = async (req, res, next) => {
   }
 };
 
-// post task
 taskController.postTask = async (req, res, next) => {
-  const { task } = req.body; // destructure task from request body
-  if (!task) return; // do nothing if no task provided
+  const { task } = req.body;
+  if (!task) return;
+
+  const queryString = 'INSERT INTO task (item) VALUES ($1)';
 
   try {
-    const addedTask = await Task.create({ item: task }); // create task in database
-    res.locals.addedTask = addedTask; // store added task in res.locals
+    const data = await db.query(queryString, [task]);
+    res.locals.addedTask = data.rows[0];
 
     return next();
   } catch (error) {
@@ -35,14 +37,14 @@ taskController.postTask = async (req, res, next) => {
   }
 };
 
-// update task
 taskController.updateTask = async (req, res, next) => {
-  // destructure id from request params & task from request body
   const { id } = req.params;
   const { task } = req.body;
 
+  const updateQueryString = 'UPDATE task SET item = ($2) WHERE _id = ($1)';
+
   try {
-    await Task.findByIdAndUpdate(id, { item: task }, { new: true }); // update task in database
+    await db.query(updateQueryString, [id, task]);
 
     return next();
   } catch (error) {
@@ -53,12 +55,13 @@ taskController.updateTask = async (req, res, next) => {
   }
 };
 
-// delete task
 taskController.deleteTask = async (req, res, next) => {
-  const { id } = req.params; // destructure ID from request params
+  const { id } = req.params;
+
+  const queryString = 'DELETE FROM task WHERE _id = ($1)';
 
   try {
-    await Task.findByIdAndDelete(id); // delete task from database
+    await db.query(queryString, [id]);
 
     return next();
   } catch (error) {
